@@ -10,7 +10,7 @@
 <body>
 
     <h1>Ajouter un produit</h1>
-    <form action="traitement.php" method="post">
+    <form action="traitement.php?action=add" method="post">
 <!-- l'attribut action indique le fichier à atteindre lors de la soumission du fomulaire.
         method précise la méthode HTTP utilisée pour transmettre les données au serveur -->
 
