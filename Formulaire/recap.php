@@ -1,21 +1,5 @@
 <?php
 session_start(); // Récupère la session correspondante à l'utilisateur en cours
-
-//     // Si un produit doit être ajouté, le gérer ici
-// if (isset($_GET['ajouter'])) {
-//     $indexAAjouter = $_GET['ajouter'];
-    
-//     // Vérifier si l'index existe dans le tableau des produits
-//     if (isset($_SESSION['products'][$indexAAjouter])) {
-//         // Supprimer l'élément
-//         unset($_SESSION['products'][$indexAAjouter]);
-//         // Mettre à jour une information dans la session pour l'affichage
-//         $_SESSION['infos'] = "L'élément $indexAAjouter a été ajouté.";
-//     } else {
-//         $_SESSION['infos'] = "Impossible d'ajouter l'élément $indexAAjouter.";
-//     }
-// }
-
 ?>
 
 <!DOCTYPE html>
@@ -52,13 +36,19 @@ session_start(); // Récupère la session correspondante à l'utilisateur en cou
                     "<td>".$index."</td>",
                     "<td>".$product['name']."</td>",
                     "<td>".number_format($product['price'], 2, ",", "&nbsp;")."&nbsp;€</td>",
-                    "<td>".$product['qtt']."</td>",
+                    "<td>",
+                        "<form action='traitement.php?action=up-qtt&id=$index' method='post' style='display:inline;'>",
+                            "<button type='submit'>+</button>",
+                        "</form>",
+                        "&nbsp;".$product['qtt']."&nbsp;",
+                        "<form action='traitement.php?action=down-qtt&id=$index' method='post' style='display:inline;'>",
+                            "<button type='submit'>-</button>",
+                        "</form>",
+                    "</td>",
                     "<td>".number_format($product['total'], 2, ",", "&nbsp;")."&nbsp;€</td>",
-
                     "<td>
                     <a href='traitement.php?action=delete&id=$index'>Supprimer</a>
                     </td>", // Lien pour supprimer l'élément
-                   
                 "</tr>";
             $totalGeneral += $product['total'];  // Additionner le total général
         }
@@ -66,6 +56,7 @@ session_start(); // Récupère la session correspondante à l'utilisateur en cou
         echo "<tr>",
                 "<td colspan='4'>Total général :</td>",
                 "<td><strong>".number_format($totalGeneral, 2, ",", "&nbsp;")."&nbsp;€</strong></td>",
+                "<td></td>", // Colonne d'action vide pour le total
                 "</tr>",
             "</tbody>",
         "</table>";
@@ -75,11 +66,12 @@ session_start(); // Récupère la session correspondante à l'utilisateur en cou
             echo "<p>".$_SESSION['infos']."</p>";
             unset($_SESSION['infos']); // Réinitialiser l'information après affichage
         }
+
+        // Formulaire pour vider le panier
+        echo "<form action='traitement.php?action=clear' method='post'>
+                <button type='submit' onclick='return confirm(\"Êtes-vous sûr de vouloir vider le panier ?\");'>Vider le panier</button>
+              </form>";
     }
     ?>
-
-        
-
-
 </body>
 </html>
