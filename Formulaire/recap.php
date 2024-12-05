@@ -11,7 +11,6 @@ session_start(); // Récupère la session correspondante à l'utilisateur en cou
 </head>
 <body>
     <?php
-    // Vérifie que la clé 'products' existe - si elle existe, vérifie si elle est vide
     if (!isset($_SESSION['products']) || empty($_SESSION['products'])) {
         echo "<p>Aucun produit en session...</p>"; // Message à l'intention de l'utilisateur
     } else {
@@ -30,7 +29,6 @@ session_start(); // Récupère la session correspondante à l'utilisateur en cou
 
         $totalGeneral = 0; // Variable $totalGeneral initialisé à zéro
 
-        // Affichage des produits dans la session
         foreach ($_SESSION['products'] as $index => $product) {
             echo "<tr>",
                     "<td>".$index."</td>",
@@ -46,9 +44,7 @@ session_start(); // Récupère la session correspondante à l'utilisateur en cou
                         "</form>",
                     "</td>",
                     "<td>".number_format($product['total'], 2, ",", "&nbsp;")."&nbsp;€</td>",
-                    "<td>
-                    <a href='traitement.php?action=delete&id=$index'>Supprimer</a>
-                    </td>", // Lien pour supprimer l'élément
+                    "<td><a href='traitement.php?action=delete&id=$index'>Supprimer</a></td>", // Lien pour supprimer l'élément
                 "</tr>";
             $totalGeneral += $product['total'];  // Additionner le total général
         }
@@ -61,13 +57,11 @@ session_start(); // Récupère la session correspondante à l'utilisateur en cou
             "</tbody>",
         "</table>";
 
-        // Affichage d'un message si un élément a été supprimé
         if (isset($_SESSION['infos'])) {
             echo "<p>".$_SESSION['infos']."</p>";
             unset($_SESSION['infos']); // Réinitialiser l'information après affichage
         }
 
-        // Formulaire pour vider le panier
         echo "<form action='traitement.php?action=clear' method='post'>
                 <button type='submit' onclick='return confirm(\"Êtes-vous sûr de vouloir vider le panier ?\");'>Vider le panier</button>
               </form>";

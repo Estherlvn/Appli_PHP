@@ -62,7 +62,8 @@ if (isset($_GET['action'])) {
                     $_SESSION['products'][$index]['qtt'] -= 1;
                     $_SESSION['products'][$index]['total'] = $_SESSION['products'][$index]['price'] * $_SESSION['products'][$index]['qtt'];
                 } else {
-                    unset($_SESSION['products'][$index]);
+                    $_SESSION['products'][$index]['qtt'] = 0; // Assurez-vous que la quantité ne descend pas en dessous de zéro
+                    $_SESSION['products'][$index]['total'] = 0;
                 }
             }
             header("Location: recap.php");

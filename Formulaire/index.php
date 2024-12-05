@@ -19,10 +19,10 @@
         <input type="text" name="name"> <br><br>
 
     <label>Prix du produit:</label>
-        <input type="number" name="price"> <br><br>
+        <input type="number" name="price" min="0"> <br><br>
 
     <label>Quantité désirée:</label>
-     <input type="number" name="qtt" value="1"> <br><br>
+        <input type="number" name="qtt" value="1" min="0" required> <br><br>
 
     <input type="submit" name="submit" value = "Ajouter au panier">
     
